@@ -22,16 +22,7 @@ html,body{
 .wrap{ min-height:100%; display:flex; align-items:center; justify-content:center; padding:36px; box-sizing:border-box; }
 .card{ width:100%; max-width:820px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:14px; padding:28px; box-shadow:0 10px 30px rgba(2,6,23,0.6); border:1px solid rgba(255,255,255,0.03); backdrop-filter: blur(8px); position:relative; }
 .top{ display:flex; align-items:center; gap:16px; margin-bottom:18px; }
-.logo{
-  width:64px;height:64px;
-  border-radius:12px;
-  background: linear-gradient(135deg, #1E90FF 0%, #00BFFF 70%);
-  display:flex;align-items:center;justify-content:center;
-  font-weight:700;
-  font-size:16px;
-  color:#081226;
-  box-shadow:0 6px 18px rgba(30,144,255,0.3);
-}
+.logo{ width:64px;height:64px; border-radius:12px; background: linear-gradient(135deg, #1E90FF 0%, #00BFFF 70%); display:flex;align-items:center;justify-content:center; font-weight:700; font-size:16px; color:#081226; box-shadow:0 6px 18px rgba(30,144,255,0.3); }
 .title{ font-size:20px; line-height:1; }
 .subtitle{ color:var(--muted); font-size:13px; margin-top:4px; }
 .countdown{ display:flex; gap:12px; justify-content:center; margin:22px 0 8px; flex-wrap:wrap; }
@@ -59,10 +50,9 @@ button.primary[disabled]{ opacity:0.5; cursor:not-allowed; box-shadow:none; }
       <div class="logo">(ADAM)</div>
       <div>
         <div id="title" class="title">🚀 ZAMBRANO — (ADAM) Launch Countdown 🚀</div>
-        <div id="subtitle" class="subtitle">Countdown to launch — 3 days</div>
+        <div id="subtitle" class="subtitle">Countdown to launch — 4 hours</div>
       </div>
     </div>
-
     <div id="countdown" aria-live="polite">
       <div class="countdown" id="units">
         <div class="unit"><div class="value" id="days">0</div><div class="label">Days</div></div>
@@ -71,7 +61,6 @@ button.primary[disabled]{ opacity:0.5; cursor:not-allowed; box-shadow:none; }
         <div class="unit"><div class="value" id="seconds">00</div><div class="label">Seconds</div></div>
       </div>
     </div>
-
     <div class="progress-wrap">
       <div class="prog-row">
         <div class="progress-bar" aria-hidden="true">
@@ -80,22 +69,18 @@ button.primary[disabled]{ opacity:0.5; cursor:not-allowed; box-shadow:none; }
         <div class="meta" id="metaPct">0.00%</div>
       </div>
     </div>
-
     <div class="controls">
       <button class="primary" id="actionBtn" disabled>🚀 Launch (Locked) 🚀</button>
     </div>
-
     <div id="launchnote" class="launch-msg" role="status">
       🚀 LAUNCHED — ZAMBRANO (ADAM) is now live! 🚀
     </div>
-
     <div class="rocket" id="rocket">🚀</div>
   </div>
 </div>
 
 <script>
 (function(){
-  const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
   const daysEl = document.getElementById('days');
   const hoursEl = document.getElementById('hours');
   const minutesEl = document.getElementById('minutes');
@@ -107,22 +92,20 @@ button.primary[disabled]{ opacity:0.5; cursor:not-allowed; box-shadow:none; }
   const rocket = document.getElementById('rocket');
   const subtitleEl = document.getElementById('subtitle');
 
-  // Always use "yesterday at 9:30 PM" as start
-  function getLaunchStart() {
-    const now = new Date();
-    let start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 21, 30, 0, 0);
-    start.setDate(start.getDate() - 1);
-    return start;
-  }
+  const launchStart = new Date();
+  launchStart.setDate(launchStart.getDate() - 1);
+  launchStart.setHours(21,30,0,0); // yesterday 9:30 PM
+
+  const launchEnd = new Date();
+  launchEnd.setHours(16,0,0,0); // today 4:00 PM
+
+  const totalMs = launchEnd - launchStart;
 
   function update(){
     const now = new Date();
-    const launchStart = getLaunchStart();
-    const endTime = new Date(launchStart.getTime() + THREE_DAYS_MS);
-    let diff = endTime - now;
-    const total = THREE_DAYS_MS;
-    const passed = now - launchStart;
-    const pct = Math.min(100, Math.max(0, (passed/total)*100));
+    let diff = launchEnd - now;
+    let passed = now - launchStart;
+    const pct = Math.min(100, Math.max(0, (passed/totalMs)*100));
 
     if(diff <= 0){
       // countdown finished
@@ -133,10 +116,9 @@ button.primary[disabled]{ opacity:0.5; cursor:not-allowed; box-shadow:none; }
       progressEl.style.width = '100%';
       metaPctEl.textContent = '100.00%';
       actionBtn.disabled = false;
-      subtitleEl.textContent = `🚀 Launched!`;
+      subtitleEl.textContent = `🚀 Launched! 🚀`;
       launchNote.classList.add('show');
     } else {
-      // countdown running
       const sec = Math.floor(diff / 1000) % 60;
       const mins = Math.floor((diff / (1000*60)) % 60);
       const hrs = Math.floor((diff / (1000*60*60)) % 24);
@@ -162,6 +144,7 @@ button.primary[disabled]{ opacity:0.5; cursor:not-allowed; box-shadow:none; }
     rocket.style.transform = 'translate(800px, -400px)';
     rocket.style.opacity = 0;
   });
+
 })();
 </script>
 </body>
