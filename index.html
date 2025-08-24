@@ -58,7 +58,7 @@ button.primary[disabled]{ opacity:0.5; cursor:not-allowed; box-shadow:none; }
     <div class="top">
       <div class="logo">(ADAM)</div>
       <div>
-        <div id="title" class="title">ZAMBRANO — (ADAM) Launch Countdown</div>
+        <div id="title" class="title">🚀 ZAMBRANO — (ADAM) Launch Countdown 🚀</div>
         <div id="subtitle" class="subtitle">Countdown to launch — 3 days</div>
       </div>
     </div>
@@ -77,7 +77,7 @@ button.primary[disabled]{ opacity:0.5; cursor:not-allowed; box-shadow:none; }
         <div class="progress-bar" aria-hidden="true">
           <div class="progress-fill" id="progress"></div>
         </div>
-        <div class="meta" id="metaPct">0%</div>
+        <div class="meta" id="metaPct">0.00%</div>
       </div>
     </div>
 
@@ -129,7 +129,7 @@ button.primary[disabled]{ opacity:0.5; cursor:not-allowed; box-shadow:none; }
       minutesEl.textContent = '00';
       secondsEl.textContent = '00';
       progressEl.style.width = '0%';
-      metaPctEl.textContent = '0%';
+      metaPctEl.textContent = '0.00%';
       actionBtn.disabled = true;
       subtitleEl.textContent = `Countdown starts at 9:30 PM`;
       launchNote.classList.remove('show');
@@ -140,7 +140,7 @@ button.primary[disabled]{ opacity:0.5; cursor:not-allowed; box-shadow:none; }
       minutesEl.textContent = '00';
       secondsEl.textContent = '00';
       progressEl.style.width = '100%';
-      metaPctEl.textContent = '100%';
+      metaPctEl.textContent = '100.00%';
       actionBtn.disabled = false;
       subtitleEl.textContent = `🚀 Launched!`;
       launchNote.classList.add('show');
@@ -155,8 +155,7 @@ button.primary[disabled]{ opacity:0.5; cursor:not-allowed; box-shadow:none; }
       minutesEl.textContent = String(mins).padStart(2,'0');
       secondsEl.textContent = String(sec).padStart(2,'0');
       progressEl.style.width = pct.toFixed(2) + '%';
-      metaPctEl.textContent = pct.toFixed(0) + '%';
-      // subtitle shows only days and hours
+      metaPctEl.textContent = pct.toFixed(2) + '%';
       subtitleEl.textContent = `Countdown to launch — ${days}d ${hrs}h`;
       actionBtn.disabled = true;
     }
